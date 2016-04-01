@@ -2,6 +2,8 @@ package sieve
 
 // https://golang.org/doc/play/sieve.go
 
+import "math/big"
+
 // Send the sequence 2, 3, 4, ... to channel 'ch'.
 func Generate(ch chan<- int) {
 	for i := 2; ; i++ {
@@ -35,4 +37,19 @@ func GeneratePrimes(n int) []int {
 		ch = ch1
 	}
 	return result
+}
+
+func UniqueSmallFactors(x *big.Int) []*big.Int {
+	limit := 65536
+	primes := GeneratePrimes(limit)
+	zero := big.NewInt(0)
+	factors := make([]*big.Int, 0)
+	for _, p := range primes {
+		bigP := big.NewInt(int64(p))
+		rem := new(big.Int).Mod(x, bigP)
+		if rem.Cmp(zero) == 0 {
+			factors = append(factors, bigP)
+		}
+	}
+	return factors
 }
