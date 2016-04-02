@@ -40,7 +40,7 @@ func GeneratePrimes(n int) []int {
 }
 
 func UniqueSmallFactors(x *big.Int) []*big.Int {
-	limit := 65536
+	limit := 65535
 	primes := GeneratePrimes(limit)
 	zero := big.NewInt(0)
 	factors := make([]*big.Int, 0)

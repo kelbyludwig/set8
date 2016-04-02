@@ -6,6 +6,10 @@ import (
 	"math/big"
 )
 
+var ZERO *big.Int = big.NewInt(0)
+var ONE *big.Int = big.NewInt(1)
+var TWO *big.Int = big.NewInt(2)
+
 type Person struct {
 	Generator *big.Int
 	Modulus   *big.Int
@@ -60,4 +64,17 @@ func (alice Person) KeyExchange(bob Person) (secret *big.Int) {
 
 	return new(big.Int).Exp(A, b, m)
 
+}
+
+//BruteForceDLP solves for x in e = g^x (mod p) using brute force
+func BruteForceDLP(g, e, p *big.Int) *big.Int {
+	i := big.NewInt(1)
+	for i.Cmp(p) < 1 {
+		exp := new(big.Int).Exp(g, i, p)
+		if exp.Cmp(e) == 0 {
+			return i
+		}
+		i = i.Add(i, ONE)
+	}
+	return ONE
 }
