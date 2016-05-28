@@ -121,57 +121,6 @@ func TestPohligHellman(t *testing.T) {
 
 }
 
-func TestKangarooBig(t *testing.T) {
-
-	ps := "11470374874925275658116663507232161402086650258453896274534991676898999262641581519101074740642369848233294239851519212341844337347119899874391456329785623"
-	qs := "335062023296420808191071248367701059461"
-	//js := "34233586850807404623475048381328686211071196701374230492615844865929237417097514638999377942356150481334217896204702"
-	gs := "622952335333961296978159266084741085889881358738459939978290179936063635566740258555167783009058567397963466103140082647486611657350811560630587013183357"
-	ys := "7760073848032689505395005705677365876654629189298052775754597607446617558600394076764814236081991643094239886772481052254010323780165093955236429914607119"
-
-	p, _ := new(big.Int).SetString(ps, 10)
-	q, _ := new(big.Int).SetString(qs, 10)
-	g, _ := new(big.Int).SetString(gs, 10)
-	y, _ := new(big.Int).SetString(ys, 10)
-
-	a := big.NewInt(0)
-	b := big.NewInt(2)
-	b = b.Exp(b, big.NewInt(20), q)
-
-	x, err := Kangaroo(a, b, g, y, p)
-
-	if err != nil {
-		t.Errorf("TestKangaroo failed")
-	}
-
-	log.Printf("index %v\n", x)
-
-}
-
-func TestKangarooSmall(t *testing.T) {
-
-	gs := "2"
-	ps := "23"
-	//xs := "5"
-	ys := "9"
-
-	p, _ := new(big.Int).SetString(ps, 10)
-	g, _ := new(big.Int).SetString(gs, 10)
-	y, _ := new(big.Int).SetString(ys, 10)
-
-	a := big.NewInt(0)
-	b := big.NewInt(8)
-
-	x, err := Kangaroo(a, b, g, y, p)
-
-	if err != nil {
-		t.Errorf("TestKangarooSmall failed")
-	}
-
-	log.Printf("index %v\n", x)
-
-}
-
 //No shame: https://rosettacode.org/wiki/Chinese_remainder_theorem#Go
 func CRT(a, n []*big.Int) (*big.Int, error) {
 	one := big.NewInt(1)
